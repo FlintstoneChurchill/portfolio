@@ -1,0 +1,79 @@
+.mac_footer{
+    perspective: 292px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footer_border{
+    margin: -2px auto 0;
+    width: 1132.97px;
+    height: 3.5px;
+    background: rgba(255,255,255,0.7);
+}
+.foot_menu-block{
+    position: relative;
+    perspective: 292px;
+    margin-bottom: 1px;
+}
+.foot_menu-block .add_white_radial{
+    position: absolute;
+    width: 100%;
+}
+.foot_menu-block::after{
+    display: block;
+    width: 100%;
+    transform: rotateX(22deg);
+    height: 43px;
+    background: #7a7d86;
+    content: "";
+    border-bottom: 1px solid rgba(80, 79, 79, 0.7);
+}
+.foot_menu-block::before{
+    position: absolute;
+    height: 28px;
+    width: 100%;
+    z-index: 1;
+    background: url(./img/white.png)2px 0px no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    content: "";
+    display: block;
+    bottom: 14px;
+    left: 1.2%;
+}
+.footer_menu{
+    display: inline-block;
+    position: absolute;
+    z-index: 10;
+    top: -40px;
+    padding: 0;
+    padding-left: 17px;
+}
+.footer_social{
+    right: 3%;
+}
+.footer_menu li{
+    position: relative;
+    display: inline-block;
+    list-style: none;
+    margin: 0 5px;
+    width: 50px;
+    height: 50px;
+}
+.footer_item{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 48px;
+    height: 48px;
+    transition: 1s;
+}
+.footer_social .footer_item{
+    width: 45px;
+    height: 45px;
+}
+.footer_item:hover{
+    transform: scale(1.1);
+    transition: 0.2s;
+}
