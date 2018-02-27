@@ -1,0 +1,15 @@
+.work {
+    display: inline-block;
+    width: 15%;
+    margin: 15px;
+    vertical-align: top;
+    text-align: center;
+}
+.work_img img {
+    width: 100%;
+    height: auto;
+}
+.work h5 {
+    font-size: 14px;
+
+}

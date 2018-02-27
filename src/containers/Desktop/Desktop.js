@@ -26,7 +26,7 @@ class Desktop extends Component {
         let index = this.data.findIndex(m => m.id === id);
         let modals = [...this.state.modals];
         let modal = {...this.data[index]};
-        modals.push({title: modal.title, id: Date.now(), active: true, fullScreen: false});
+        modals.push({title: modal.title, id: Date.now(), active: true, isFullScreen: false});
         this.setState({modals});
     };
     closeModal = (e, id) => {
@@ -50,7 +50,12 @@ class Desktop extends Component {
     };
 
     toggleFullScreenHandler = (id) => {
-
+        let modals = [...this.state.modals];
+        let index = modals.findIndex(m => m.id === id);
+        let modal = {...modals[index]};
+        modal.isFullScreen = !modal.isFullScreen;
+        modals[index] = modal;
+        this.setState({modals});
     };
 
     render() {
@@ -63,6 +68,8 @@ class Desktop extends Component {
                                   closed={(e) => this.closeModal(e, modal.id)}
                                   active={() => this.modalActiveHandler(modal.id)}
                                   isActive={modal.active}
+                                  isFullScreen={modal.isFullScreen}
+                                  toggleFullScreen={() => this.toggleFullScreenHandler(modal.id)}
                     />
                 })}
                 <Footer data={this.data} opened={this.openModal}/>
