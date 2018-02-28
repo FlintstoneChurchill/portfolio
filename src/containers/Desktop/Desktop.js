@@ -3,73 +3,62 @@ import Header from "../../components/Header/Header";
 import Footer from '../../components/Footer/Footer';
 import './Desktop.css';
 import Modal from "../../components/UI/Modal/Modal";
+import data from '../../components/data';
 
 class Desktop extends Component {
     state = {
-        modals: [],
+        modals: {},
     };
-
-    data = [
-        {title: 'Услуги', img: 'img/mac-app-store.png', id: 'services'},
-        {title: 'Портфолио', img: 'img/gallery.png', id: 'portfolio'},
-        {title: 'Наши работники', img: 'img/Workers.png', id: 'workers'},
-        {title: 'Наша история', img: 'img/ICal.png', id: 'history'},
-        {title: 'Наши контакты', img: 'img/contacts-icon.png', id: 'contacts'},
-        {title: 'Как нас найти', img: 'img/map-icon.ico', id: 'location'},
-        {title: 'Связаться с нами', img: 'img/logo_1.png', id: 'call'},
-        {title: 'Настройки страницы', img: 'img/Settings.ico', id: 'settings'},
-        {title: 'Помощь по сайту', img: 'img/help.ico', id: 'help'}
-    ];
 
     openModal = (e, id) => {
         e.preventDefault();
-        let index = this.data.findIndex(m => m.id === id);
-        let modals = [...this.state.modals];
-        let modal = {...this.data[index]};
-        modals.push({title: modal.title, id: Date.now(), active: true, isFullScreen: false});
-        this.setState({modals});
+        let modals = {...this.state.modals};
+        let index = data.findIndex(m => m.id === id);
+        let modal = data[index];
+        if (!(id in modals)) {
+            modals[id] = {title: modal.title, active: true, isFullScreen: false};
+            this.setState({modals});
+        } else {
+            alert('window is already opened')
+        }
     };
-    closeModal = (e, id) => {
-        e.preventDefault();
-        let index = this.state.modals.findIndex(m => m.id === id);
-        let modals = [...this.state.modals];
-        modals.splice(index, 1);
-        console.log(index);
+    closeModal = (id) => {
+        let modals = {...this.state.modals};
+        delete modals[id];
+        console.log(modals[id])
         this.setState({modals});
     };
     modalActiveHandler = (id) => {
-        this.setState((state) => {
-            let modals = [...state.modals];
-            modals.forEach((modal, i) => {
-                let modalCopy = {...modal};
-                modalCopy.active = modal.id === id;
-                modals[i] = modalCopy;
-            });
-            return {modals}
-        });
+        let modals = {...this.state.modals};
+        for (let modal in modals) {
+            let modalCopy = {...modals[modal]};
+            modalCopy.active = id === modal;
+            modals[modal] = modalCopy;
+        }
+        this.setState({modals})
     };
 
     toggleFullScreenHandler = (id) => {
-        let modals = [...this.state.modals];
-        let index = modals.findIndex(m => m.id === id);
-        let modal = {...modals[index]};
+        let modals = {...this.state.modals};
+        let modal = {...modals[id]};
         modal.isFullScreen = !modal.isFullScreen;
-        modals[index] = modal;
+        modals[id] = modal;
         this.setState({modals});
     };
 
     render() {
+        let modals = Object.keys(this.state.modals);
         return (
             <Fragment>
                 <Header/>
-                {this.state.modals.map((modal, i) => {
-                    return <Modal title={modal.title}
-                                  key={`${modal.id}_${i}`}
-                                  closed={(e) => this.closeModal(e, modal.id)}
-                                  active={() => this.modalActiveHandler(modal.id)}
-                                  isActive={modal.active}
-                                  isFullScreen={modal.isFullScreen}
-                                  toggleFullScreen={() => this.toggleFullScreenHandler(modal.id)}
+                {modals.map(modalId => {
+                    return <Modal title={this.state.modals[modalId].title}
+                                  key={modalId}
+                                  closed={() => this.closeModal(modalId)}
+                                  active={() => this.modalActiveHandler(modalId)}
+                                  isActive={this.state.modals[modalId].active}
+                                  isFullScreen={this.state.modals[modalId].isFullScreen}
+                                  toggleFullScreen={() => this.toggleFullScreenHandler(modalId)}
                     />
                 })}
                 <Footer data={this.data} opened={this.openModal}/>

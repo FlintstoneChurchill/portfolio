@@ -2,7 +2,7 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://flintstonechurchill.github.io/portfolio/",
+  "homepage": "http://j827389.myjino.ru/front/",
   "dependencies": {
     "axios": "^0.18.0",
     "gh-pages": "^1.1.0",

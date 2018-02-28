@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import data from '../data';
 
 const Footer = props => {
     return (
@@ -7,7 +8,7 @@ const Footer = props => {
             <div className="container">
                 <div className="foot_menu-block">
                     <ul className="footer_menu">
-                        {props.data.map((item, index)=> {
+                        {data.map((item, index)=> {
                             return (
                                 <li key={index}>
                                     <a href="" className="footer_item" onClick={(e) => props.opened(e, item.id)}>

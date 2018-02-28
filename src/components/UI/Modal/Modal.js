@@ -10,24 +10,18 @@ class Modal extends Component {
     };
 
     componentDidMount() {
-        axios.get('/wp/v2/posts').then(resp => {
-            let data = resp.data;
-            let promises = [];
+        axios.get('/wp/v2/posts?_embed').then(resp => {
             let works = [];
+            resp.data.forEach(item => {
+                let thumb = item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url;
+                let title = item.title.rendered;
+                let id = item.id;
 
-            data.forEach(item => {
-                let work = {title: item.title.rendered, id: item.id};
-                
-                promises.push(axios.get(item._links['wp:featuredmedia'][0].href).then(img => {
-                    let imgData = img.data;
-                    work = {...work, thumb: imgData.media_details.sizes.thumbnail.source_url};
-                    works.push(work);
-                }));
+                let work = {title, thumb, id};
+                works.push(work)
             });
 
-            Promise.all(promises).then(() => {
-                this.setState({works})
-            });
+            this.setState({works});
         });
     }
 
